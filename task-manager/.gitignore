@@ -1,10 +1,15 @@
 # Backend
 backend/venv/
 backend/__pycache__/
+backend/**/__pycache__/
 backend/.env
 backend/*.pyc
 backend/.pytest_cache/
 backend/.coverage
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+backend/tasks.db-journal
 
 # Frontend
 frontend/node_modules/
