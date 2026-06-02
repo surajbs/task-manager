@@ -1,0 +1,14 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "Task Manager - Full Stack Application",
+  "private": true,
+  "scripts": {
+    "clear-cache": "npm run clear-frontend-cache && npm run clear-backend-cache",
+    "clear-frontend-cache": "cd frontend && npm cache clean --force && rm -rf node_modules/.cache && cd ..",
+    "clear-backend-cache": "cd backend && find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null; find . -type f -name '*.pyc' -delete; echo 'Python cache cleared' && cd ..",
+    "clean": "npm run clean-frontend && npm run clean-backend",
+    "clean-frontend": "cd frontend && rm -rf node_modules build && npm cache clean --force && npm install && cd ..",
+    "clean-backend": "cd backend && find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null; find . -type f -name '*.pyc' -delete && cd .."
+  }
+}

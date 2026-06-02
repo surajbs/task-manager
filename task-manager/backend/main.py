@@ -1,4 +1,15 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import (
+    FastAPI,
+    Depends,
+    HTTPException,
+    status
+)
+
+from fastapi.security import (
+    HTTPBearer,
+    HTTPAuthorizationCredentials
+)
+
 from sqlalchemy.orm import Session
 
 from database import engine, Base, get_db
@@ -20,18 +31,43 @@ from schemas.user_schema import (
 
 from auth import (
     hash_password,
-    verify_password
+    verify_password,
+    create_access_token,
+    verify_access_token
 )
 
 app = FastAPI()
 
-# Create DB tables
+security = HTTPBearer()
+
+# Create database tables
 Base.metadata.create_all(bind=engine)
 
 
-# =====================================
+# =========================================
+# CURRENT USER
+# =========================================
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+
+    token = credentials.credentials
+
+    email = verify_access_token(token)
+
+    if not email:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired token"
+        )
+
+    return email
+
+
+# =========================================
 # TASK APIs
-# =====================================
+# =========================================
 
 # CREATE TASK
 @app.post(
@@ -41,6 +77,7 @@ Base.metadata.create_all(bind=engine)
 )
 def create_task(
     task: TaskCreate,
+    current_user: str = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -53,12 +90,13 @@ def create_task(
     return db_task
 
 
-# GET TASKS
+# GET ALL TASKS
 @app.get(
     "/tasks",
     response_model=list[TaskResponse]
 )
 def get_tasks(
+    current_user: str = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -75,6 +113,7 @@ def get_tasks(
 def update_task(
     task_id: int,
     update_data: TaskUpdate,
+    current_user: str = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -100,6 +139,7 @@ def update_task(
 @app.delete("/tasks/{task_id}")
 def delete_task(
     task_id: int,
+    current_user: str = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -119,9 +159,9 @@ def delete_task(
     return {"success": True}
 
 
-# =====================================
+# =========================================
 # USER APIs
-# =====================================
+# =========================================
 
 # SIGNUP
 @app.post(
@@ -161,19 +201,19 @@ def signup(
     return db_user
 
 
-# LOGIN
+# LOGIN + JWT TOKEN
 @app.post("/login")
 def login(
     user: UserLogin,
     db: Session = Depends(get_db)
 ):
 
-    # Find user
+    # Find user by email
     db_user = db.query(UserDB).filter(
         UserDB.email == user.email
     ).first()
 
-    # Check user exists
+    # User not found
     if not db_user:
         raise HTTPException(
             status_code=401,
@@ -186,14 +226,23 @@ def login(
         db_user.hashed_password
     )
 
+    # Wrong password
     if not valid_password:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
 
+    # Create JWT token
+    access_token = create_access_token(
+        data={
+            "sub": db_user.email
+        }
+    )
+
     return {
-        "message": "Login successful"
+        "access_token": access_token,
+        "token_type": "bearer"
     }
 
 

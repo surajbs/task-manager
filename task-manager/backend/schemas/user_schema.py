@@ -13,7 +13,7 @@ class UserLogin(BaseModel):
     password: str
 
 
-# USER RESPONSE
+# RESPONSE
 class UserResponse(BaseModel):
     id: int
     email: EmailStr
