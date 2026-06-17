@@ -49,7 +49,8 @@ Base.metadata.create_all(bind=engine)
 # =========================================
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security)
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db)
 ):
 
     token = credentials.credentials
@@ -62,7 +63,17 @@ def get_current_user(
             detail="Invalid or expired token"
         )
 
-    return email
+    user = db.query(UserDB).filter(
+        UserDB.email == email
+    ).first()
+
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="User not found"
+        )
+
+    return user
 
 
 # =========================================
@@ -77,11 +88,14 @@ def get_current_user(
 )
 def create_task(
     task: TaskCreate,
-    current_user: str = Depends(get_current_user),
+    current_user: UserDB = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
-    db_task = TaskDB(title=task.title)
+    db_task = TaskDB(
+        title=task.title,
+        user_id=current_user.id
+    )
 
     db.add(db_task)
     db.commit()
@@ -90,22 +104,24 @@ def create_task(
     return db_task
 
 
-# GET ALL TASKS
+# GET MY TASKS
 @app.get(
     "/tasks",
     response_model=list[TaskResponse]
 )
 def get_tasks(
-    current_user: str = Depends(get_current_user),
+    current_user: UserDB = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
-    tasks = db.query(TaskDB).all()
+    tasks = db.query(TaskDB).filter(
+        TaskDB.user_id == current_user.id
+    ).all()
 
     return tasks
 
 
-# UPDATE TASK
+# UPDATE MY TASK
 @app.put(
     "/tasks/{task_id}",
     response_model=TaskResponse
@@ -113,12 +129,13 @@ def get_tasks(
 def update_task(
     task_id: int,
     update_data: TaskUpdate,
-    current_user: str = Depends(get_current_user),
+    current_user: UserDB = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
     task = db.query(TaskDB).filter(
-        TaskDB.id == task_id
+        TaskDB.id == task_id,
+        TaskDB.user_id == current_user.id
     ).first()
 
     if not task:
@@ -135,16 +152,17 @@ def update_task(
     return task
 
 
-# DELETE TASK
+# DELETE MY TASK
 @app.delete("/tasks/{task_id}")
 def delete_task(
     task_id: int,
-    current_user: str = Depends(get_current_user),
+    current_user: UserDB = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
     task = db.query(TaskDB).filter(
-        TaskDB.id == task_id
+        TaskDB.id == task_id,
+        TaskDB.user_id == current_user.id
     ).first()
 
     if not task:
@@ -156,7 +174,9 @@ def delete_task(
     db.delete(task)
     db.commit()
 
-    return {"success": True}
+    return {
+        "success": True
+    }
 
 
 # =========================================
@@ -174,7 +194,6 @@ def signup(
     db: Session = Depends(get_db)
 ):
 
-    # Check existing email
     existing_user = db.query(UserDB).filter(
         UserDB.email == user.email
     ).first()
@@ -185,10 +204,8 @@ def signup(
             detail="Email already registered"
         )
 
-    # Hash password
     hashed_pw = hash_password(user.password)
 
-    # Create user
     db_user = UserDB(
         email=user.email,
         hashed_password=hashed_pw
@@ -201,39 +218,34 @@ def signup(
     return db_user
 
 
-# LOGIN + JWT TOKEN
+# LOGIN + JWT
 @app.post("/login")
 def login(
     user: UserLogin,
     db: Session = Depends(get_db)
 ):
 
-    # Find user by email
     db_user = db.query(UserDB).filter(
         UserDB.email == user.email
     ).first()
 
-    # User not found
     if not db_user:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
 
-    # Verify password
     valid_password = verify_password(
         user.password,
         db_user.hashed_password
     )
 
-    # Wrong password
     if not valid_password:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
 
-    # Create JWT token
     access_token = create_access_token(
         data={
             "sub": db_user.email
@@ -246,7 +258,7 @@ def login(
     }
 
 
-# GET USERS (Learning purpose only)
+# GET USERS (Learning Purpose)
 @app.get("/users")
 def get_users(
     db: Session = Depends(get_db)
