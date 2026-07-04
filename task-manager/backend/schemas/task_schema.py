@@ -1,16 +1,20 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-# Input schema
+
 class TaskCreate(BaseModel):
-    title: str
+    title: str = Field(
+        min_length=3,
+        max_length=100
+    )
 
 
-# Update schema
 class TaskUpdate(BaseModel):
-    title: str
+    title: str = Field(
+        min_length=3,
+        max_length=100
+    )
 
 
-# Response schema
 class TaskResponse(BaseModel):
     id: int
     title: str
