@@ -114,41 +114,25 @@ task-manager
 
 ## Login
 
-> *(Add screenshot here)*
-
-```
-screenshots/login.png
-```
+![Login screen](screenshots/Login.png)
 
 ---
 
 ## Signup
 
-> *(Add screenshot here)*
-
-```
-screenshots/signup.png
-```
+![Signup screen](screenshots/Signup.png)
 
 ---
 
 ## Dashboard
 
-> *(Add screenshot here)*
-
-```
-screenshots/dashboard.png
-```
+![Dashboard overview](screenshots/Dashboard.png)
 
 ---
 
 ## Task Management
 
-> *(Add screenshot here)*
-
-```
-screenshots/tasks.png
-```
+![Task management view](screenshots/Tasks.png)
 
 ---
 
