@@ -114,25 +114,25 @@ task-manager
 
 ## Login
 
-![Login screen](screenshots/Login.png)
+![Login screen](task-manager/screenshots/Login.png)
 
 ---
 
 ## Signup
 
-![Signup screen](screenshots/Signup.png)
+![Signup screen](task-manager/screenshots/Signup.png)
 
 ---
 
 ## Dashboard
 
-![Dashboard overview](screenshots/Dashboard.png)
+![Dashboard overview](task-manager/screenshots/Dashboard.png)
 
 ---
 
 ## Task Management
 
-![Task management view](screenshots/Tasks.png)
+![Task management view](task-manager/screenshots/Tasks.png)
 
 ---
 
