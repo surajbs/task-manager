@@ -69,12 +69,14 @@ def verify_access_token(token: str):
             algorithms=[ALGORITHM]
         )
 
-        email = payload.get("sub")
+        print("PAYLOAD:", payload)
 
-        if email is None:
-            return None
+        email = payload.get("sub")
 
         return email
 
-    except JWTError:
+    except JWTError as e:
+
+        print("JWT ERROR:", e)
+
         return None

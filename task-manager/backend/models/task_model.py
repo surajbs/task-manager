@@ -1,14 +1,37 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import (
+    Boolean,
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+)
+
 from database import Base
+
 
 class TaskDB(Base):
     __tablename__ = "tasks"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True
+    )
 
-    title = Column(String, index=True)
+    title = Column(
+        String,
+        nullable=False,
+        index=True
+    )
+
+    completed = Column(
+        Boolean,
+        default=False,
+        nullable=False
+    )
 
     user_id = Column(
         Integer,
-        ForeignKey("users.id")
+        ForeignKey("users.id"),
+        nullable=False
     )

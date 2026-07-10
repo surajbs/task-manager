@@ -4,7 +4,7 @@ from fastapi import (
     HTTPException,
     status
 )
-
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import (
     HTTPBearer,
     HTTPAuthorizationCredentials
@@ -37,6 +37,17 @@ from auth import (
 )
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 security = HTTPBearer()
 
@@ -94,6 +105,7 @@ def create_task(
 
     db_task = TaskDB(
         title=task.title,
+        completed=False,
         user_id=current_user.id
     )
 
@@ -145,6 +157,7 @@ def update_task(
         )
 
     task.title = update_data.title
+    task.completed = update_data.completed
 
     db.commit()
     db.refresh(task)
@@ -207,6 +220,7 @@ def signup(
     hashed_pw = hash_password(user.password)
 
     db_user = UserDB(
+        name=user.name,
         email=user.email,
         hashed_password=hashed_pw
     )
@@ -258,6 +272,17 @@ def login(
     }
 
 
+# GET CURRENT USER
+@app.get(
+    "/me",
+    response_model=UserResponse
+)
+def get_me(
+    current_user: UserDB = Depends(get_current_user)
+):
+    return current_user
+
+
 # GET USERS (Learning Purpose)
 @app.get("/users")
 def get_users(
@@ -269,6 +294,7 @@ def get_users(
     return [
         {
             "id": user.id,
+            "name": user.name,
             "email": user.email
         }
         for user in users

@@ -1,0 +1,25 @@
+.task-search {
+  width: 100%;
+}
+
+.task-search input {
+  width: 100%;
+
+  padding: 14px 18px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 14px;
+
+  outline: none;
+
+  font-size: 0.95rem;
+
+  transition: all .25s ease;
+}
+
+.task-search input:focus {
+  border-color: #4f46e5;
+
+  box-shadow: 0 0 0 4px rgba(79,70,229,.1);
+}
