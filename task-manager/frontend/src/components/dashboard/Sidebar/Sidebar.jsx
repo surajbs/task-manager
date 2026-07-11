@@ -9,10 +9,13 @@ const Sidebar = () => {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+const handleLogout = () => {
+  logout();
+
+  navigate("/login", {
+    replace: true,
+  });
+};
 
   return (
     <aside className="sidebar">

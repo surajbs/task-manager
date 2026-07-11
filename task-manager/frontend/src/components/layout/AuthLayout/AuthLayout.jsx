@@ -1,4 +1,5 @@
 import "./AuthLayout.css";
+import Footer from "../Footer/Footer";
 
 const AuthLayout = ({ children }) => {
   return (
@@ -76,6 +77,7 @@ const AuthLayout = ({ children }) => {
         <div className="auth-card">
           {children}
         </div>
+         <Footer />
       </section>
     </div>
   );

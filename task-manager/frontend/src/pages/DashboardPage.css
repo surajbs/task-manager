@@ -127,3 +127,7 @@
   }
 
 }
+
+.dashboard-page {
+  min-height: 100%;
+}

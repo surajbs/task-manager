@@ -129,30 +129,23 @@
 
 .hero-illustration {
   position: relative;
-
-  height: 300px;
-
+  width: min(100%, 760px);
+  max-width: 760px;
+  height: 340px;
+  margin: 40px auto 0;
   z-index: 2;
 }
 
 .floating-card {
   position: absolute;
-
-  min-width: 230px;
-
+  width: clamp(220px, 24vw, 260px);
+  min-width: 220px;
   padding: 22px;
-
   border-radius: 20px;
-
   background: rgba(255,255,255,.16);
-
   border: 1px solid rgba(255,255,255,.18);
-
   backdrop-filter: blur(18px);
-
-  box-shadow:
-      0 25px 50px rgba(0,0,0,.18);
-
+  box-shadow: 0 25px 50px rgba(0,0,0,.18);
   animation: float 5s ease-in-out infinite;
 }
 
@@ -162,41 +155,34 @@
 
 .floating-card h4 {
   margin: 14px 0 8px;
-
   font-size: 1.05rem;
-
   font-weight: 700;
-
   color: white;
 }
 
 .floating-card p {
   margin: 0;
-
   color: rgba(255,255,255,.92);
-
   line-height: 1.5;
-
   font-size: .92rem;
 }
 
 /* Better Balanced Layout */
 
 .card-one {
-  top: 10px;
-  left: 40px;
+  top: 10%;
+  left: 4%;
 }
 
 .card-two {
-  bottom: 0;
-  left: 180px;
-
+  top: 52%;
+  left: 30%;
   animation-delay: .8s;
 }
 
 .card-three {
-  top: 20px;
-  right: 3rem;
+  top: 10%;
+  right: 18%;
   animation-delay: 1.6s;
 }
 
@@ -206,10 +192,11 @@
 
 .auth-form-section {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-
   padding: 40px;
+  gap: 24px;
 }
 
 .auth-card {
@@ -281,7 +268,7 @@
    TABLET
 ===================================== */
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
 
   .auth-layout {
     grid-template-columns: 1fr;
@@ -289,7 +276,6 @@
 
   .auth-hero {
     min-height: 520px;
-
     padding: 48px;
   }
 
@@ -299,6 +285,84 @@
 
   .auth-card {
     margin: 40px 0;
+  }
+
+  .hero-illustration {
+    min-height: 360px;
+  }
+
+  .card-one {
+    top: 8%;
+    left: 4%;
+  }
+
+  .card-two {
+    top: 46%;
+    left: 22%;
+  }
+
+  .card-three {
+    top: 10%;
+    right: 4%;
+  }
+
+}
+
+@media (max-width: 1050px) {
+  .hero-illustration {
+    width: min(100%, 700px);
+  }
+
+  .card-two {
+    left: 26%;
+  }
+
+  .card-three {
+    right: 10%;
+  }
+}
+
+@media (max-width: 992px) {
+
+  .auth-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-hero {
+    min-height: auto;
+    padding: 42px;
+  }
+
+  .hero-content h2 {
+    font-size: 2.8rem;
+  }
+
+  .hero-illustration {
+    display: grid;
+    gap: 18px;
+    min-height: auto;
+    height: auto;
+    margin-top: 32px;
+  }
+
+  .floating-card {
+    position: static;
+    width: min(100%, 320px);
+    margin: 0 auto;
+    transform: none;
+  }
+
+  .card-one,
+  .card-two,
+  .card-three {
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
+  .auth-card {
+    margin: 32px 0;
   }
 
 }
@@ -314,11 +378,8 @@
   }
 
   .auth-hero {
-
     min-height: auto;
-
     padding: 36px;
-
     text-align: center;
   }
 
@@ -336,9 +397,7 @@
 
   .auth-card {
     padding: 32px 24px;
-
     border-radius: 20px;
-
     box-shadow: none;
   }
 

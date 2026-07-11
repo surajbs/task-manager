@@ -93,8 +93,9 @@ const SignupForm = () => {
     });
 
     if (result.success) {
-      navigate("/login");
-      return;
+   navigate("/login", {
+  replace: true,
+});
     }
 
     setErrors((prev) => ({

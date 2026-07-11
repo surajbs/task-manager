@@ -36,10 +36,6 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem(TOKEN_KEY);
-
-      // Future Enhancement:
-      // Redirect to login or refresh token
-      // window.location.href = "/login";
     }
 
     return Promise.reject(error);

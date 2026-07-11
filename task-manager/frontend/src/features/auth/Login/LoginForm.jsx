@@ -67,10 +67,13 @@ const LoginForm = () => {
 
     const result = await login(formData);
 
-    if (result.success) {
-      navigate("/dashboard");
-      return;
-    }
+ if (result.success) {
+  navigate("/dashboard", {
+  replace: true,
+});
+
+return;
+}
 
     setErrors((prev) => ({
       ...prev,

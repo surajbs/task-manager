@@ -15,20 +15,12 @@ const TaskCard = ({
       <div className="task-card-header">
         <div>
           <h3
-            className="task-title"
-            style={{
-              textDecoration: task.completed
-                ? "line-through"
-                : "none",
-              opacity: task.completed ? 0.7 : 1,
-            }}
+            className={`task-title ${
+              task.completed ? "completed" : ""
+            }`}
           >
             {task.title}
           </h3>
-
-          <p className="task-id">
-            Task #{task.id}
-          </p>
         </div>
 
         <Badge
