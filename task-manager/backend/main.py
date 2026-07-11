@@ -36,7 +36,15 @@ from auth import (
     verify_access_token
 )
 
-app = FastAPI()
+app = FastAPI(
+    title="TaskFlow API",
+    description="A modern task management REST API built with FastAPI and JWT Authentication.",
+    version="1.0.0",
+)
+
+# =========================================
+# CORS
+# =========================================
 
 app.add_middleware(
     CORSMiddleware,
@@ -44,10 +52,23 @@ app.add_middleware(
         "http://localhost:5173",
         "http://127.0.0.1:5173",
     ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# =========================================
+# HEALTH CHECK
+# =========================================
+
+@app.get("/")
+def root():
+    return {
+        "status": "success",
+        "message": "TaskFlow API is running 🚀",
+        "version": "1.0.0",
+    }
 
 security = HTTPBearer()
 
