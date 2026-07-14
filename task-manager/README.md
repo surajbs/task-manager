@@ -12,7 +12,6 @@ TaskFlow is a production-ready SaaS-inspired task management platform that enabl
 |-------------|-----|
 | **Frontend** | https://taskflow-roan-eight.vercel.app |
 | **Backend API** | https://taskflow-4f9k.onrender.com |
-| **API Documentation (Swagger)** | https://taskflow-4f9k.onrender.com/docs |
 
 ---
 
@@ -335,9 +334,7 @@ During this project I gained hands-on experience with:
 
 **Suraj BS**
 
-GitHub
-
-https://github.com/surajbs
+GitHub - https://github.com/surajbs
 
 ---
 
