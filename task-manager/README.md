@@ -2,13 +2,23 @@
 
 > A modern full-stack task management application built with **React 19**, **FastAPI**, **SQLAlchemy**, and **SQLite**.
 
-TaskFlow is a production-style task management platform that allows users to securely manage their personal tasks with JWT authentication, modern SaaS-inspired UI, responsive design, and a scalable feature-based architecture.
+TaskFlow is a production-ready SaaS-inspired task management platform that enables users to securely manage their personal tasks with JWT authentication, a modern responsive UI, and a scalable full-stack architecture.
 
 ---
 
-## ✨ Features
+## 🌐 Live Demo
 
-### 🔐 Authentication
+| Application | URL |
+|-------------|-----|
+| **Frontend** | https://taskflow-roan-eight.vercel.app |
+| **Backend API** | https://taskflow-4f9k.onrender.com |
+| **API Documentation (Swagger)** | https://taskflow-4f9k.onrender.com/docs |
+
+---
+
+# ✨ Features
+
+## 🔐 Authentication
 
 - User Registration
 - Secure Login
@@ -53,31 +63,38 @@ TaskFlow is a production-style task management platform that allows users to sec
 
 ---
 
-# 🏗 Architecture
+# 🏗 Project Architecture
 
 ```
-task-manager
+task-manager/
 │
-├── frontend
-│   ├── src
-│   │   ├── api
-│   │   ├── assets
-│   │   ├── components
-│   │   ├── context
-│   │   ├── features
-│   │   ├── hooks
-│   │   ├── layouts
-│   │   ├── pages
-│   │   ├── routes
-│   │   └── styles
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── features/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   ├── styles/
+│   │   └── App.jsx
+│   │
+│   ├── public/
+│   └── package.json
 │
-├── backend
+├── backend/
+│   ├── models/
+│   ├── schemas/
 │   ├── auth.py
 │   ├── database.py
 │   ├── main.py
-│   ├── models
-│   ├── schemas
 │   └── requirements.txt
+│
+├── screenshots/
+│
+└── README.md
 ```
 
 ---
@@ -94,6 +111,8 @@ task-manager
 - Custom Hooks
 - CSS3
 
+---
+
 ## Backend
 
 - FastAPI
@@ -102,11 +121,26 @@ task-manager
 - JWT Authentication
 - Pydantic
 
-## Tools
+---
+
+## Deployment
+
+| Service | Platform |
+|----------|----------|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | SQLite |
+| Version Control | GitHub |
+
+---
+
+## Development Tools
 
 - Git
 - GitHub
 - VS Code
+- Render
+- Vercel
 
 ---
 
@@ -141,14 +175,14 @@ task-manager
 ## Clone Repository
 
 ```bash
-git clone https://github.com/<your-github-username>/task-manager.git
+git clone https://github.com/surajbs/task-manager.git
 
 cd task-manager
 ```
 
 ---
 
-## Backend
+## Backend Setup
 
 ```bash
 cd backend
@@ -170,7 +204,7 @@ http://localhost:8000
 
 ---
 
-## Frontend
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -190,11 +224,13 @@ http://localhost:5173
 
 # 🔑 Environment Variables
 
-## Frontend
+## Frontend (Development)
 
 ```
 VITE_API_BASE_URL=http://localhost:8000
 ```
+
+Production is configured using Vercel Environment Variables.
 
 ---
 
@@ -243,25 +279,40 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 ---
 
-# 🚀 Future Improvements
+# 🗺 Roadmap
 
-- PostgreSQL Support
-- Docker
-- Refresh Tokens
+## Version 1.1
+
+- PostgreSQL Migration
+- Pagination
 - User Profile
-- File Attachments
-- Categories & Labels
+- Settings Page
+- Docker Support
+
+---
+
+## Version 1.2
+
+- Categories
+- Labels
 - Due Dates
 - Email Notifications
 - Team Collaboration
+
+---
+
+## Version 2.0
+
+- Kanban Board
+- Drag & Drop
+- Analytics Dashboard
 - Dark Mode
-- Drag & Drop Task Board
 
 ---
 
 # 📚 What I Learned
 
-During this project I explored:
+During this project I gained hands-on experience with:
 
 - React Architecture
 - Context API
@@ -275,11 +326,19 @@ During this project I explored:
 - CRUD Operations
 - Frontend & Backend Integration
 - Production Folder Structure
+- Git & GitHub Workflow
+- Deploying Full Stack Applications using Vercel & Render
 
 ---
 
 # 👨‍💻 Author
 
-**Suraj.BS**
+**Suraj BS**
+
+GitHub
+
+https://github.com/surajbs
 
 ---
+
+# ⭐ If you found this project helpful, consider giving it a Star!
