@@ -18,11 +18,11 @@
 
     box-shadow:0 8px 24px rgba(0,0,0,.05);
 
+    cursor: default;
+
 }
 
 .task-card:hover{
-
-    transform:translateY(-4px);
 
     box-shadow:0 16px 40px rgba(0,0,0,.08);
 
@@ -103,4 +103,8 @@
 .task-title.completed {
   text-decoration: line-through;
   opacity: 0.7;
+}
+
+.task-card:not(:last-child) {
+    margin-bottom: 7px;
 }
