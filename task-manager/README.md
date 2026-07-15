@@ -31,7 +31,7 @@ TaskFlow is a production-ready SaaS-inspired task management platform that enabl
 
 # ✨ Features
 
-## 🔐 Authentication
+### 🔐 Authentication
 
 - User Registration
 - Secure Login
@@ -391,8 +391,6 @@ During this project I gained hands-on experience with:
 **Suraj BS**
 
 **GitHub** - https://github.com/surajbs
-
-**Live Demo** - https://taskflow-roan-eight.vercel.app
 
 ---
 
