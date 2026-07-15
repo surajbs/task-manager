@@ -392,6 +392,6 @@ During this project I gained hands-on experience with:
 
 **GitHub** - https://github.com/surajbs
 
----
+⭐ If you found this project helpful, consider giving it a Star!
 
-# ⭐ If you found this project helpful, consider giving it a Star!
+---
