@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
@@ -5,14 +7,41 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 # Database Configuration
 # ==========================================
 
-DATABASE_URL = "sqlite:///./tasks.db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={
-        "check_same_thread": False,
-    },
-)
+# ------------------------------------------
+# Production (Neon PostgreSQL)
+# ------------------------------------------
+
+if DATABASE_URL:
+
+    # Some providers use postgres://
+    if DATABASE_URL.startswith("postgres://"):
+        DATABASE_URL = DATABASE_URL.replace(
+            "postgres://",
+            "postgresql://",
+            1,
+        )
+
+    engine = create_engine(
+        DATABASE_URL,
+        pool_pre_ping=True,
+    )
+
+# ------------------------------------------
+# Local Development (SQLite)
+# ------------------------------------------
+
+else:
+
+    DATABASE_URL = "sqlite:///./tasks.db"
+
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={
+            "check_same_thread": False,
+        },
+    )
 
 SessionLocal = sessionmaker(
     autocommit=False,
@@ -32,5 +61,6 @@ def get_db():
 
     try:
         yield db
+
     finally:
         db.close()
