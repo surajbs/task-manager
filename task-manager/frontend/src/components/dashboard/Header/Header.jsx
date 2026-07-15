@@ -15,26 +15,21 @@ const Header = () => {
   return (
     <header className="dashboard-header">
       <div className="header-left">
-        <h1>Welcome back, {user?.name || "User"} 👋</h1>
+        <h1>
+          Welcome back, {user?.name || "User"} 👋
+        </h1>
 
         <p>{today}</p>
       </div>
 
       <div className="header-right">
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Search tasks..."
-          />
-        </div>
-
-        <button className="icon-button">
-          🔔
-        </button>
-
-        <div className="header-avatar">
+        <button
+          className="header-avatar"
+          type="button"
+          aria-label="User menu"
+        >
           {user?.name?.charAt(0).toUpperCase() || "U"}
-        </div>
+        </button>
       </div>
     </header>
   );

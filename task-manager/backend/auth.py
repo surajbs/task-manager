@@ -1,43 +1,72 @@
+import os
+
 from datetime import datetime, timedelta
+
+from dotenv import load_dotenv
 
 from jose import JWTError, jwt
 
 from passlib.context import CryptContext
 
+# ==========================================
+# Load Environment Variables
+# ==========================================
 
-# SECRET KEY
-SECRET_KEY = "mysecretkey"
+load_dotenv()
 
-# JWT Algorithm
-ALGORITHM = "HS256"
+# ==========================================
+# JWT Configuration
+# ==========================================
 
-# Token Expiry
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = os.getenv("SECRET_KEY")
 
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+
+ACCESS_TOKEN_EXPIRE_MINUTES = int(
+    os.getenv(
+        "ACCESS_TOKEN_EXPIRE_MINUTES",
+        "30"
+    )
+)
+
+if not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY environment variable is not set."
+    )
+
+# ==========================================
+# Password Hashing
+# ==========================================
 
 pwd_context = CryptContext(
     schemes=["bcrypt"],
-    deprecated="auto"
+    deprecated="auto",
 )
 
+# ==========================================
+# Hash Password
+# ==========================================
 
-# HASH PASSWORD
 def hash_password(password: str):
     return pwd_context.hash(password)
 
+# ==========================================
+# Verify Password
+# ==========================================
 
-# VERIFY PASSWORD
 def verify_password(
     plain_password: str,
-    hashed_password: str
+    hashed_password: str,
 ):
     return pwd_context.verify(
         plain_password,
-        hashed_password
+        hashed_password,
     )
 
+# ==========================================
+# Create Access Token
+# ==========================================
 
-# CREATE ACCESS TOKEN
 def create_access_token(data: dict):
 
     to_encode = data.copy()
@@ -46,19 +75,24 @@ def create_access_token(data: dict):
         minutes=ACCESS_TOKEN_EXPIRE_MINUTES
     )
 
-    to_encode.update({
-        "exp": expire
-    })
+    to_encode.update(
+        {
+            "exp": expire,
+        }
+    )
 
     encoded_jwt = jwt.encode(
         to_encode,
         SECRET_KEY,
-        algorithm=ALGORITHM
+        algorithm=ALGORITHM,
     )
 
     return encoded_jwt
 
-# VERIFY TOKEN
+# ==========================================
+# Verify Access Token
+# ==========================================
+
 def verify_access_token(token: str):
 
     try:
@@ -66,17 +100,11 @@ def verify_access_token(token: str):
         payload = jwt.decode(
             token,
             SECRET_KEY,
-            algorithms=[ALGORITHM]
+            algorithms=[ALGORITHM],
         )
 
-        print("PAYLOAD:", payload)
+        return payload.get("sub")
 
-        email = payload.get("sub")
-
-        return email
-
-    except JWTError as e:
-
-        print("JWT ERROR:", e)
+    except JWTError:
 
         return None

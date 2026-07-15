@@ -1,7 +1,15 @@
 import os
 
+from dotenv import load_dotenv
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+
+# ==========================================
+# Load Environment Variables
+# ==========================================
+
+load_dotenv()
 
 # ==========================================
 # Database Configuration
@@ -9,39 +17,22 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# ------------------------------------------
-# Production (Neon PostgreSQL)
-# ------------------------------------------
-
-if DATABASE_URL:
-
-    # Some providers use postgres://
-    if DATABASE_URL.startswith("postgres://"):
-        DATABASE_URL = DATABASE_URL.replace(
-            "postgres://",
-            "postgresql://",
-            1,
-        )
-
-    engine = create_engine(
-        DATABASE_URL,
-        pool_pre_ping=True,
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL environment variable is not set."
     )
 
-# ------------------------------------------
-# Local Development (SQLite)
-# ------------------------------------------
-
-else:
-
-    DATABASE_URL = "sqlite:///./tasks.db"
-
-    engine = create_engine(
-        DATABASE_URL,
-        connect_args={
-            "check_same_thread": False,
-        },
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgres://",
+        "postgresql://",
+        1,
     )
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+)
 
 SessionLocal = sessionmaker(
     autocommit=False,

@@ -1,17 +1,31 @@
 # 🚀 TaskFlow
 
-> A modern full-stack task management application built with **React 19**, **FastAPI**, **SQLAlchemy**, and **SQLite**.
+> A modern full-stack task management application built with **React 19**, **FastAPI**, **SQLAlchemy ORM**, and **PostgreSQL (Neon)**.
 
 TaskFlow is a production-ready SaaS-inspired task management platform that enables users to securely manage their personal tasks with JWT authentication, a modern responsive UI, and a scalable full-stack architecture.
 
 ---
 
-## 🌐 Live Demo
+# 🚀 Project Status
+
+✅ Production Ready
+
+- Frontend deployed on **Vercel**
+- Backend deployed on **Render**
+- Database hosted on **Neon PostgreSQL**
+- JWT Authentication
+- Responsive SaaS UI
+- REST API Architecture
+
+---
+
+# 🌐 Live Demo
 
 | Application | URL |
 |-------------|-----|
 | **Frontend** | https://taskflow-roan-eight.vercel.app |
 | **Backend API** | https://taskflow-4f9k.onrender.com |
+| **Swagger API Docs** | https://taskflow-4f9k.onrender.com/docs |
 
 ---
 
@@ -64,7 +78,28 @@ TaskFlow is a production-ready SaaS-inspired task management platform that enabl
 
 # 🏗 Project Architecture
 
+```text
+                   User
+                     │
+                     ▼
+          React 19 + Vite (Vercel)
+                     │
+                Axios REST API
+                     │
+                     ▼
+         FastAPI Backend (Render)
+                     │
+              SQLAlchemy ORM
+                     │
+                     ▼
+      PostgreSQL Database (Neon)
 ```
+
+---
+
+# 🏗 Project Structure
+
+```text
 task-manager/
 │
 ├── frontend/
@@ -81,6 +116,8 @@ task-manager/
 │   │   └── App.jsx
 │   │
 │   ├── public/
+│   ├── .env.development
+│   ├── .env.production
 │   └── package.json
 │
 ├── backend/
@@ -89,11 +126,13 @@ task-manager/
 │   ├── auth.py
 │   ├── database.py
 │   ├── main.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── .env
 │
 ├── screenshots/
 │
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ---
@@ -115,8 +154,8 @@ task-manager/
 ## Backend
 
 - FastAPI
-- SQLAlchemy
-- SQLite
+- SQLAlchemy ORM
+- PostgreSQL (Neon)
 - JWT Authentication
 - Pydantic
 
@@ -128,7 +167,7 @@ task-manager/
 |----------|----------|
 | Frontend | Vercel |
 | Backend | Render |
-| Database | SQLite |
+| Database | Neon PostgreSQL |
 | Version Control | GitHub |
 
 ---
@@ -140,6 +179,7 @@ task-manager/
 - VS Code
 - Render
 - Vercel
+- Neon
 
 ---
 
@@ -223,20 +263,28 @@ http://localhost:5173
 
 # 🔑 Environment Variables
 
-## Frontend (Development)
+## Frontend (.env.development)
 
-```
+```env
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-Production is configured using Vercel Environment Variables.
+---
+
+## Frontend (.env.production)
+
+```env
+VITE_API_BASE_URL=https://taskflow-4f9k.onrender.com
+```
 
 ---
 
-## Backend
+## Backend (.env)
 
-```
-SECRET_KEY=your-secret-key
+```env
+DATABASE_URL=postgresql://your_neon_connection_string
+
+SECRET_KEY=your_secret_key
 
 ALGORITHM=HS256
 
@@ -270,11 +318,12 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 # 🔒 Security
 
-- Password Hashing
+- Password Hashing (bcrypt)
 - JWT Authentication
 - Protected APIs
 - User-specific Data Isolation
 - Secure Route Protection
+- Environment Variable Configuration
 
 ---
 
@@ -282,10 +331,10 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 ## Version 1.1
 
-- PostgreSQL Migration
 - Pagination
 - User Profile
 - Settings Page
+- Alembic Database Migrations
 - Docker Support
 
 ---
@@ -306,6 +355,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 - Drag & Drop
 - Analytics Dashboard
 - Dark Mode
+- Activity Timeline
 
 ---
 
@@ -318,6 +368,7 @@ During this project I gained hands-on experience with:
 - Custom Hooks
 - FastAPI
 - SQLAlchemy ORM
+- PostgreSQL
 - JWT Authentication
 - REST API Design
 - Responsive UI Design
@@ -325,8 +376,13 @@ During this project I gained hands-on experience with:
 - CRUD Operations
 - Frontend & Backend Integration
 - Production Folder Structure
+- Environment Variables
+- Cloud Database Integration
 - Git & GitHub Workflow
-- Deploying Full Stack Applications using Vercel & Render
+- Deploying Full Stack Applications
+- Vercel Deployment
+- Render Deployment
+- Neon PostgreSQL
 
 ---
 
@@ -334,7 +390,9 @@ During this project I gained hands-on experience with:
 
 **Suraj BS**
 
-GitHub - https://github.com/surajbs
+**GitHub** - https://github.com/surajbs
+
+**Live Demo** - https://taskflow-roan-eight.vercel.app
 
 ---
 

@@ -12,12 +12,6 @@ backend/.coverage
 
 backend/*.pyc
 
-# SQLite
-backend/*.db
-backend/*.db-shm
-backend/*.db-wal
-backend/tasks.db-journal
-
 # =====================================
 # Frontend
 # =====================================
